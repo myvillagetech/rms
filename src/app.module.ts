@@ -7,13 +7,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MONGO_KEYS } from './config/keys.config';
 import { ConfigModule } from '@nestjs/config';
 import { BasicDetailsModule } from './basic-details/basic-details.module';
+import { RequestedCommentsModule } from './requested-comments/requested-comments.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot(MONGO_KEYS.url),
     UserModule, 
     AuthModule, 
-    ConfigModule.forRoot(), BasicDetailsModule,
+    ConfigModule.forRoot(), BasicDetailsModule, RequestedCommentsModule,
 
   ],
   controllers: [AppController],
