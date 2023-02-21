@@ -13,4 +13,11 @@ export class CreateRequestedCommentDto {
         type: String
     })
     comments: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty({
+        type: String
+    })
+    basicDetailsId : string
 }
