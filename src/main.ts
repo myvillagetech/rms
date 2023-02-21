@@ -12,8 +12,8 @@ async function bootstrap() {
     app.useGlobalPipes(new ValidationPipe());
 
     const options = new DocumentBuilder()
-        .setTitle('Ashramam')
-        .setDescription('Ashramam API')
+        .setTitle('RMS')
+        .setDescription('RMS API')
         .setVersion('1.0')
         .addTag('auth')
         .addBearerAuth(
