@@ -7,11 +7,16 @@ import {
 import { IRoles, Roles } from 'src/shared/constants/roles.constants';
 
 
-export class CreateBasicDetailDto {
+export class CreateBasicDetailsDto {
   @ApiProperty({ type: String })
   @IsNotEmpty()
   @IsString()
   rfqStatus: string;
+
+  @ApiProperty({ type: String })
+  @IsNotEmpty()
+  @IsString()
+  persons: string;
 
   @ApiProperty({ type: String })
   @IsNotEmpty()
@@ -58,10 +63,10 @@ export class CreateBasicDetailDto {
   @IsString()
   quoteSubDate: string;
 
-  @ApiProperty({ type: String })
-  @IsNotEmpty()
-  @IsString()
-  maxCost: string;
+  // @ApiProperty({ type: String })
+  // @IsNotEmpty()
+  // @IsString()
+  // maxCost: string;
 
   @ApiProperty({ type: String })
   @IsNotEmpty()

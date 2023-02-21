@@ -5,9 +5,7 @@ import  mongoose  from 'mongoose';
 @Schema({
     timestamps: true,
 })
-
-
-export class BasicDetail  {
+export class BasicDetails {
   @Prop({ required: true, type: String })
   persons: string;
 
@@ -41,8 +39,8 @@ export class BasicDetail  {
   @Prop({ required: true, type: String })
   quoteSubDate: string;
 
-  @Prop({ required: true, type: String })
-  maxCost: string;
+  // @Prop({ required: true, type: String })
+  // maxCost: string;
 
   @Prop({ required: true, type: String })
   invoiceAmount: string;
@@ -56,3 +54,6 @@ export class BasicDetail  {
   @Prop({ required: true, type: String })
   description: string;
 }
+
+export type BasicDetailsDocument = BasicDetails & Document;
+export const BasicDetailsSchema = SchemaFactory.createForClass(BasicDetails);
