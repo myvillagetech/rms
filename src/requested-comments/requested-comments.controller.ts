@@ -20,12 +20,12 @@ export class RequestedCommentsController {
     description:
       '(Leave empty. Use lock icon on the top-right to authorize)',
   })
-  createComment(
+  async createComment(
     @Body() createRequestedCommentDto: CreateRequestedCommentDto,
     @Res() response: any,
     @Headers('Authorization') authHeader: string,) {
     try {
-      const newComment = this.requestedCommentsService.createComment(createRequestedCommentDto, authHeader);
+      const newComment = await this.requestedCommentsService.createComment(createRequestedCommentDto, authHeader);
       return response.status(HttpStatus.CREATED).json({
         message: 'comment has been created successfully',
         success: true,
@@ -41,10 +41,11 @@ export class RequestedCommentsController {
   }
 
   @Get()
-  getAllComments(
+  async getAllComments(
     @Res() response: any) {
     try {
-      const comments = this.requestedCommentsService.getAllComments();
+      const comments = await this.requestedCommentsService.getAllComments();
+      console.log(comments);
       return response.status(HttpStatus.CREATED).json({
         message: 'comments fetched successfully',
         success: true,
