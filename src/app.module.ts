@@ -18,7 +18,7 @@ import { SupplierModule } from './supplier/supplier.module';
     ConfigModule.forRoot(), 
     BasicDetailsModule, 
     RequestedCommentsModule, 
-    // SupplierModule,
+    SupplierModule,
 
   ],
   controllers: [AppController],

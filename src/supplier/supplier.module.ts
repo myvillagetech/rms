@@ -9,7 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 @Module({
   imports: [
     MongooseModule.forFeature([
-        { name: MODEL_ENUMS.REQUESTED_COMMENTS, schema: SupplierSchema },
+        { name: MODEL_ENUMS.SUPPLIERS, schema: SupplierSchema },
     ]),
     AuthModule,
 ],

@@ -10,7 +10,7 @@ import { SupplierDocument } from './schemas/supplier.schemas';
 
 @Injectable()
 export class SupplierService {
-  @InjectModel(MODEL_ENUMS.SUPPLIERS) private suppliersModel: Model<SupplierDocument>
+  @InjectModel(MODEL_ENUMS.SUPPLIERS) private suppliersModel: Model<SupplierDocument>;
   constructor(
     private readonly authService: AuthService,
   ) { }
