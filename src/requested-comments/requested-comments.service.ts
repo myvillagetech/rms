@@ -10,7 +10,7 @@ import { RequestedCommentsDocument } from './schemas/requested-comment.schemas';
 
 @Injectable()
 export class RequestedCommentsService {
-  @InjectModel(MODEL_ENUMS.REQUESTED_COMMENTS) private requestedCommentsModel: Model<RequestedCommentsDocument>;
+  @InjectModel(MODEL_ENUMS.REQUEST_COMMENTS) private requestedCommentsModel: Model<RequestedCommentsDocument>;
   constructor(
     private readonly authService: AuthService,
 ) {} 
