@@ -9,7 +9,7 @@ import { RequestedCommentSchema } from './schemas/requested-comment.schemas';
 @Module({
   imports: [
     MongooseModule.forFeature([
-        { name: MODEL_ENUMS.REQUESTED_COMMENTS, schema: RequestedCommentSchema },
+        { name: MODEL_ENUMS.REQUEST_COMMENTS, schema: RequestedCommentSchema },
     ]),
     AuthModule,
 ],
