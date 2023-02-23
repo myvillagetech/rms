@@ -1,24 +1,30 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import  mongoose  from 'mongoose';
+import mongoose from 'mongoose';
+import { RequestSchemaCreator } from 'src/request/schemas/request.schema';
 
 @Schema({
     timestamps: true,
 })
-export class RequestedComments {
+export class RequestedCommentSchemaCreator {
+    @Prop({
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'request',
+    })
+    requestId: RequestSchemaCreator;
 
-    @Prop({ required: true, type: String })
-    basicDetailsId: string;
+    @Prop({
+        required: true,
+        type: String,
+    })
+    comment: string;
 
-    @Prop({ required: true, type: String })
-    comments: string;
-
-    @Prop({ required: true, type: String })
-    createdBy: string;
-
-    @Prop({ required: true, type: String })
-    createdByName: string;
-
+    @Prop({ 
+        required: true, 
+        type: String 
+    })
+    addedBy: string;
 }
 
-export type RequestedCommentsDocument = RequestedComments & Document;
-export const RequestedCommentSchema = SchemaFactory.createForClass(RequestedComments); 
+export type RequestedCommentsDocument = RequestedCommentSchemaCreator & Document;
+export const RequestedCommentSchema =
+    SchemaFactory.createForClass(RequestedCommentSchemaCreator);
