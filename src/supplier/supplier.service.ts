@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AuthService } from 'src/auth/auth.service';
 import { MODEL_ENUMS } from 'src/shared/enums/model.enum';
-import { CreateSupplierDto } from './dto/create-supplier.dto';
+import { AddSupplierDto } from './dto/add-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { SupplierDocument } from './schemas/supplier.schemas';
 
@@ -15,13 +15,12 @@ export class SupplierService {
     private readonly authService: AuthService,
   ) { }
 
-  async createsupplier( supplierData : CreateSupplierDto, tokenHeader: string,):Promise<any>{
+  async addSupplier( supplierData : AddSupplierDto , tokenHeader: string,):Promise<any>{
     const decodedToken: any = this.authService.getDecodedToken(tokenHeader);
 
     const newsupplierData = {
       ...supplierData,
-      createdBy: decodedToken._id,
-      createdByName: decodedToken.name,
+      addedBy: decodedToken._id,
     }
 
     const data = await new this.suppliersModel(newsupplierData);
@@ -44,15 +43,15 @@ export class SupplierService {
     return supplier;
   }
 
-  async getsuppliersByuserId(userId : string):Promise<any>{
-    const suppliers = await this.suppliersModel.find({createdBy : userId});
+  async getsuppliersByRequestId(requestId : string):Promise<any>{
+    const suppliers = await this.suppliersModel.find({requestId : requestId});
     if(!suppliers && suppliers.length === 0){
       throw new NotFoundException('suppliers NOt Found');
     }
     return suppliers;
   }
 
-  async updatesupplierById(supplierId : string, supplierDate : UpdateSupplierDto):Promise<any>{
+  async updateSupplierById(supplierId : string, supplierDate : UpdateSupplierDto):Promise<any>{
     const supplier = await this.suppliersModel.findByIdAndUpdate(supplierId, supplierDate, {new : true});
     if(!supplier ){
       throw new NotFoundException('supplier Not Found');
@@ -60,7 +59,7 @@ export class SupplierService {
     return supplier;
   }
 
-  async deletesupplierById(supplierId : string):Promise<any>{
+  async deleteSupplierById(supplierId : string):Promise<any>{
     const supplier = await this.suppliersModel.findByIdAndDelete(supplierId);
     if(!supplier ){
       throw new NotFoundException('supplier Not Found');

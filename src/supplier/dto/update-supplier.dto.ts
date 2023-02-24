@@ -1,8 +1,8 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsBoolean, IsString } from 'class-validator';
-import { CreateSupplierDto } from './create-supplier.dto';
+import { AddSupplierDto } from './add-supplier.dto';
 
-export class UpdateSupplierDto extends PartialType(CreateSupplierDto) {
+export class UpdateSupplierDto extends PartialType(AddSupplierDto) {
     @IsString()
     @ApiProperty({
         type: String

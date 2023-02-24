@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsBoolean, IsNotEmpty, IsString } from "class-validator";
 
-export class CreateSupplierDto {
+export class AddSupplierDto {
     @IsString()
     @IsNotEmpty()
     @ApiProperty({
@@ -105,7 +105,7 @@ export class CreateSupplierDto {
     @ApiProperty({
         type: String
     })
-    rquestId : string
+    requestId : string
 
 
 
