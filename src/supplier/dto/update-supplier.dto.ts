@@ -19,7 +19,7 @@ export class UpdateSupplierDto extends PartialType(CreateSupplierDto) {
     @ApiProperty({
         type: Boolean
     })
-    sup : boolean
+    preferredSuplier : boolean
 
     @IsString()
     @ApiProperty({
@@ -85,5 +85,13 @@ export class UpdateSupplierDto extends PartialType(CreateSupplierDto) {
     @ApiProperty({
         type: String
     })
-    basicDetailsId : string
+    totalCost : string
+
+    @IsString()
+    @ApiProperty({
+        type: String
+    })
+    requstId : string
+
+   
 }

@@ -10,6 +10,7 @@ import { BasicDetailsModule } from './basic-details/basic-details.module';
 import { RequestedCommentsModule } from './requested-comments/requested-comments.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { RequestModule } from './request/request.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { RequestModule } from './request/request.module';
     ConfigModule.forRoot(), 
     BasicDetailsModule, 
     RequestedCommentsModule, 
-    SupplierModule, RequestModule,
+    SupplierModule, RequestModule, CommentsModule,
 
   ],
   controllers: [AppController],

@@ -12,8 +12,8 @@ export class RequestService {
   @InjectModel(MODEL_ENUMS.REQUEST) private RequestModel : Model<RequestDocument>
 
   async createRequest(requestDetails: CreateRequestDto) {
-    const newRequest =  new this.RequestModel(requestDetails);
-    return await newRequest.save();
+    const newRequest =  await new this.RequestModel(requestDetails);
+    return  newRequest.save();
   }
 
   async updateRequest(requestId: string, requestDetails: UpdateRequestDto,

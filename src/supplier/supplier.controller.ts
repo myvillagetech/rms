@@ -45,7 +45,7 @@ export class SupplierController {
     @Res() response: any) {
     try {
       const suppliers = this.supplierService.getAllsuppliers();
-      return response.status(HttpStatus.CREATED).json({
+      return response.status(HttpStatus.OK).json({
         message: 'suppliers fetched successfully',
         success: true,
         suppliers,
@@ -120,5 +120,4 @@ export class SupplierController {
     }
   }
 
- 
 }

@@ -21,7 +21,7 @@ export class CreateSupplierDto {
     @ApiProperty({
         type: Boolean
     })
-    sup : boolean
+    preferredSuplier : boolean
 
     @IsString()
     @IsNotEmpty()
@@ -98,7 +98,14 @@ export class CreateSupplierDto {
     @ApiProperty({
         type: String
     })
-    basicDetailsId : string
+    totalCost: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty({
+        type: String
+    })
+    rquestId : string
 
 
 
