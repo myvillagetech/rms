@@ -9,7 +9,7 @@ import { UpdateCommentDto } from './dto/update-comment.dto';
 @ApiTags('request-comments')
 @ApiBearerAuth('access-token')
 @UseGuards(JwtAuthGuard)
-export class RequestedCommentsController {
+export class RequestCommentsController {
   constructor(private readonly commentsService: CommentsService) { }
 
   @Post()
@@ -19,12 +19,12 @@ export class RequestedCommentsController {
     description:
       '(Leave empty. Use lock icon on the top-right to authorize)',
   })
-  async createComment(
+  async addComment(
     @Body() addCommentDto: AddCommentDto,
     @Res() response: any,
     @Headers('Authorization') authHeader: string,) {
     try {
-      const newComment = await this.commentsService.createComment(addCommentDto, authHeader);
+      const newComment = await this.commentsService.addComment(addCommentDto, authHeader);
       return response.status(HttpStatus.CREATED).json({
         message: 'comment has been created successfully',
         success: true,
@@ -44,7 +44,6 @@ export class RequestedCommentsController {
     @Res() response: any) {
     try {
       const comments = await this.commentsService.getAllComments();
-      console.log(comments);
       return response.status(HttpStatus.CREATED).json({
         message: 'comments fetched successfully',
         success: true,
@@ -60,11 +59,11 @@ export class RequestedCommentsController {
   }
 
   @Get('/:commentId')
-  getCommentById(
+  async getCommentById(
     @Res() response: any,
     @Param('commentId') commentId : string) {
     try {
-      const comment = this.commentsService.getCommentById(commentId);
+      const comment = await this.commentsService.getCommentById(commentId);
       return response.status(HttpStatus.CREATED).json({
         message: 'comment fetched successfully',
         success: true,
@@ -79,12 +78,12 @@ export class RequestedCommentsController {
     }
   }
 
-  @Get('/:userId')
-  getCommentByUserId(
+  @Get('requestId/:requestId')
+  async getCommentByUserId(
     @Res() response: any,
-    @Param('userId') userId : string) {
+    @Param('requestId') requestId : string) {
     try {
-      const comment = this.commentsService.getCommentsByuserId(userId);
+      const comment = await this.commentsService.getCommentsByRequestId(requestId);
       return response.status(HttpStatus.CREATED).json({
         message: 'comments fetched successfully',
         success: true,

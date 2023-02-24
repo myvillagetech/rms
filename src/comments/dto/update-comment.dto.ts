@@ -7,7 +7,7 @@ export class UpdateCommentDto extends PartialType(AddCommentDto) {
     @ApiProperty({
         type: String
     })
-    comments: string;
+    comment: string;
 
     @IsString()
     @ApiProperty({

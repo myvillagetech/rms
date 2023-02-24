@@ -13,7 +13,7 @@ export class CommentsService {
     private readonly authService: AuthService,
 ) {} 
 
-  async createComment( commentData : AddCommentDto, tokenHeader: string,):Promise<any>{
+  async addComment( commentData : AddCommentDto, tokenHeader: string,):Promise<any>{
     const decodedToken: any = this.authService.getDecodedToken(tokenHeader);
 
     const newCommentData = {
@@ -41,8 +41,8 @@ export class CommentsService {
     return comment;
   }
 
-  async getCommentsByuserId(userId : string):Promise<any>{
-    const comments = await this.requestCommentsModel.find({createdBy : userId});
+  async getCommentsByRequestId(requestId : string):Promise<any>{
+    const comments = await this.requestCommentsModel.find({requestId : requestId});
     if(!comments && comments.length === 0){
       throw new NotFoundException('Comments NOt Found');
     }

@@ -10,7 +10,7 @@ export class Supplier {
     avalability: boolean;
 
     @Prop({ required: true, type: Boolean, default: false })
-    sup: boolean;
+    preferredSuplier: boolean;
 
     @Prop({ required: true, type: String })
     contactName: string;
@@ -44,6 +44,9 @@ export class Supplier {
 
     @Prop({ required: true, type: String })
     addedBy: string;
+
+    @Prop({ required: true, type: String })
+    totalCost: string;
 
     @Prop({
         type: mongoose.Schema.Types.ObjectId,

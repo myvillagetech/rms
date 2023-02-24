@@ -9,7 +9,7 @@ export class AddCommentDto {
     @ApiProperty({
         type: String
     })
-    comments: string;
+    comment: string;
 
     @IsString()
     @IsNotEmpty()
