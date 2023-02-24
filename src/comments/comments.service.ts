@@ -3,12 +3,13 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AuthService } from 'src/auth/auth.service';
 import { MODEL_ENUMS } from 'src/shared/enums/model.enum';
-import { AddCommentDto, RequestCommentsDocument } from './dto/create-comment.dto';
+import { AddCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
+import { CommentsDocument } from './schemas/comment.schemas';
 
 @Injectable()
 export class CommentsService {
-  @InjectModel(MODEL_ENUMS.REQUEST_COMMENTS) private requestCommentsModel: Model<RequestCommentsDocument>;
+  @InjectModel(MODEL_ENUMS.COMMENTS) private commentModel: Model<CommentsDocument>;
   constructor(
     private readonly authService: AuthService,
 ) {} 
@@ -21,12 +22,12 @@ export class CommentsService {
       addedBy: decodedToken._id,
     }
 
-    const data = await new this.requestCommentsModel(newCommentData);
+    const data = await new this.commentModel(newCommentData);
     return data.save();
   }
 
   async getAllComments():Promise<any>{
-    const comments = await this.requestCommentsModel.find();
+    const comments = await this.commentModel.find();
     if(!comments && comments.length === 0){
       throw new NotFoundException('Comments NOt Found');
     }
@@ -34,7 +35,7 @@ export class CommentsService {
   }
 
   async getCommentById(commentId : string):Promise<any>{
-    const comment = await this.requestCommentsModel.findById(commentId);
+    const comment = await this.commentModel.findById(commentId);
     if(!comment ){
       throw new NotFoundException('Comment  Not Found');
     }
@@ -42,7 +43,7 @@ export class CommentsService {
   }
 
   async getCommentsByRequestId(requestId : string):Promise<any>{
-    const comments = await this.requestCommentsModel.find({requestId : requestId});
+    const comments = await this.commentModel.find({requestId : requestId});
     if(!comments && comments.length === 0){
       throw new NotFoundException('Comments NOt Found');
     }
@@ -50,7 +51,7 @@ export class CommentsService {
   }
 
   async updateCommentById(commentId : string, commentDate : UpdateCommentDto):Promise<any>{
-    const comment = await this.requestCommentsModel.findByIdAndUpdate(commentId, commentDate, {new : true});
+    const comment = await this.commentModel.findByIdAndUpdate(commentId, commentDate, {new : true});
     if(!comment ){
       throw new NotFoundException('Comment Not Found');
     }
@@ -58,7 +59,7 @@ export class CommentsService {
   }
 
   async deleteCommentById(commentId : string):Promise<any>{
-    const comment = await this.requestCommentsModel.findByIdAndDelete(commentId);
+    const comment = await this.commentModel.findByIdAndDelete(commentId);
     if(!comment ){
       throw new NotFoundException('Comment Not Found');
     }

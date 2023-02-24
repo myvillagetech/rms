@@ -6,8 +6,6 @@ import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MONGO_KEYS } from './config/keys.config';
 import { ConfigModule } from '@nestjs/config';
-import { BasicDetailsModule } from './basic-details/basic-details.module';
-import { RequestedCommentsModule } from './requested-comments/requested-comments.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { RequestModule } from './request/request.module';
 import { CommentsModule } from './comments/comments.module';
@@ -18,8 +16,6 @@ import { CommentsModule } from './comments/comments.module';
     UserModule, 
     AuthModule, 
     ConfigModule.forRoot(), 
-    BasicDetailsModule, 
-    RequestedCommentsModule, 
     SupplierModule, RequestModule, CommentsModule,
 
   ],

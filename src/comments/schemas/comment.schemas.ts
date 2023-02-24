@@ -5,10 +5,11 @@ import { RequestSchemaCreator } from "src/request/schemas/request.schema";
 @Schema({
     timestamps: true,
 })
-export class RequestCommentSchemaCreator {
+export class CommentSchemaCreator {
     @Prop({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'request',
+        required : true
     })
     requestId: RequestSchemaCreator;
 
@@ -25,7 +26,7 @@ export class RequestCommentSchemaCreator {
     addedBy: string;
 }
 
-export type RequestedCommentsDocument = RequestCommentSchemaCreator & Document;
-export const RequestedCommentSchema =SchemaFactory.createForClass(RequestCommentSchemaCreator);
+export type CommentsDocument = CommentSchemaCreator & Document;
+export const CommentSchema = SchemaFactory.createForClass(CommentSchemaCreator);
 
 
