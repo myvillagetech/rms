@@ -21,9 +21,9 @@ export class CommentSchemaCreator {
 
     @Prop({ 
         required: true, 
-        type: String 
+        type: Object 
     })
-    addedBy: string;
+    addedBy: {id : string, name : string};
 }
 
 export type CommentsDocument = CommentSchemaCreator & Document;

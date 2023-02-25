@@ -19,7 +19,10 @@ export class CommentsService {
 
     const newCommentData = {
       ...commentData,
-      addedBy: decodedToken._id,
+      addedBy: {
+        id : decodedToken._id,
+        name : decodedToken.name
+      },
     }
 
     const data = await new this.commentModel(newCommentData);
