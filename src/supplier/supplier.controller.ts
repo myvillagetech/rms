@@ -60,12 +60,12 @@ export class SupplierController {
     }
   }
 
-  @Get('/:requestId')
-  getsupplierByRequestId(
+  @Get('/request/:requestId')
+ async getsupplierByRequestId(
     @Res() response: any,
     @Param('requestId') requestId : string) {
     try {
-      const supplier = this.supplierService.getsuppliersByRequestId(requestId);
+      const supplier = await this.supplierService.getsuppliersByRequestId(requestId);
       return response.status(HttpStatus.OK).json({
         message: 'suppliers fetched successfully',
         success: true,
@@ -81,12 +81,12 @@ export class SupplierController {
   }
 
   @Put('/:supplierId')
-  updateSupplierById(
+  async updateSupplierById(
     @Res() response: any,
     @Param('supplierId') supplierId : string,
     @Body() supplierData : UpdateSupplierDto) {
     try {
-      const supplier = this.supplierService.updateSupplierById(supplierId,supplierData);
+      const supplier = await this.supplierService.updateSupplierById(supplierId,supplierData);
       return response.status(HttpStatus.OK).json({
         message: 'supplier updated successfully',
         success: true,
@@ -102,11 +102,11 @@ export class SupplierController {
   }
 
   @Delete('/:supplierId')
-  deleteSupplierById(
+  async deleteSupplierById(
     @Res() response: any,
     @Param('supplierId') supplierId : string) {
     try {
-      const supplier = this.supplierService.deleteSupplierById(supplierId);
+      const supplier = await this.supplierService.deleteSupplierById(supplierId);
       return response.status(HttpStatus.OK).json({
         message: 'supplier deleted successfully',
         success: true,

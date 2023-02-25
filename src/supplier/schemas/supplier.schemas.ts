@@ -1,6 +1,10 @@
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { RequestSchemaCreator } from 'src/request/schemas/request.schema';
+
+@Schema({
+    timestamps: true,
+}) 
 
 export class Supplier {
     @Prop({ required: true, type: String })
