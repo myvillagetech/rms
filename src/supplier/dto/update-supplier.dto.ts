@@ -91,7 +91,7 @@ export class UpdateSupplierDto extends PartialType(AddSupplierDto) {
     @ApiProperty({
         type: String
     })
-    requstId : string
+    requestId : string
 
    
 }
