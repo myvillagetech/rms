@@ -41,11 +41,11 @@ export class SupplierController {
   }
 
   @Get('/:supplierId')
-  getsupplierById(
+  async getsupplierById(
     @Res() response: any,
     @Param('supplierId') supplierId : string) {
     try {
-      const supplier = this.supplierService.getsupplierById(supplierId);
+      const supplier = await this.supplierService.getsupplierById(supplierId);
       return response.status(HttpStatus.CREATED).json({
         message: 'supplier fetched successfully',
         success: true,
