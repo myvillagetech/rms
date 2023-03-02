@@ -3,6 +3,7 @@ export const MODEL_ENUMS = {
     COMMENTS : 'comments',
     SUPPLIERS : 'supplier',
     REQUEST : 'request',
-    COMPANY:'company'
+    COMPANY:'company',
+    SALES_PERSON:'sales-person'
     
 }

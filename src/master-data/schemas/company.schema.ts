@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose from "mongoose";
 @Schema({
      timestamps: true,
 })
@@ -8,6 +9,7 @@ export class CompanySchemaCreator {
         type: String,
     })
     name: string;
+
 }
 
 export type CompanyDocument = CompanySchemaCreator & Document;
