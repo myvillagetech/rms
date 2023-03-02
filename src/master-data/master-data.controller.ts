@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Headers, UseGuards, Res, HttpStatus, Put } from '@nestjs/common';
 import { MasterDataService } from './master-data.service';
-import { AddCompanyDataDto } from './dto/add-companydata.dto';
-import { UpdateCompanyDataDto } from './dto/update-company.data.dto';
+import { AddCompanyDataDto } from './dto/add-company.dto';
+import { UpdateCompanyDataDto } from './dto/update-company.dto';
 import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guards';
-import { AddSalespersonDataDto } from './dto/sales-person/add-salespersondata.dto';
-import { UpdateSalespersonDataDto } from './dto/sales-person/update-salespersondata.dto';
+import { AddSalespersonDataDto } from './dto/sales-person/add-salesperson.dto';
+import { UpdateSalespersonDataDto } from './dto/sales-person/update-salesperson.dto';
 
 @Controller('master-data')
 @ApiTags('master-data')
