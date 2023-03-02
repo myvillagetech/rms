@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SupplierModule } from './supplier/supplier.module';
 import { RequestModule } from './request/request.module';
 import { CommentsModule } from './comments/comments.module';
+import { MasterDataModule } from './master-data/master-data.module';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { CommentsModule } from './comments/comments.module';
     UserModule, 
     AuthModule, 
     ConfigModule.forRoot(), 
-    SupplierModule, RequestModule, CommentsModule,
+    SupplierModule, RequestModule, CommentsModule,  MasterDataModule,
 
   ],
   controllers: [AppController],
