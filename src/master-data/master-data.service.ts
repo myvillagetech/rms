@@ -4,11 +4,11 @@ import { Model } from 'mongoose';
 import { AuthService } from 'src/auth/auth.service';
 import { MODEL_ENUMS } from 'src/shared/enums/model.enum';
 import { AddCompanyDataDto } from './dto/add-companydata.dto';
-import { AddSalespersonDataDto } from './dto/sales-person/add-salesdata.dto';
-import { UpdateSalespersonDataDto } from './dto/sales-person/update-salesdata.dto';
+import { AddSalespersonDataDto } from './dto/sales-person/add-salespersondata.dto';
+import { UpdateSalespersonDataDto } from './dto/sales-person/update-salespersondata.dto';
 import { UpdateCompanyDataDto } from './dto/update-company.data.dto';
 import { CompanyDocument } from './schemas/company.schema';
-import { SalesPersonDocument } from './schemas/slaes-person.schema';
+import { SalesPersonDocument } from './schemas/sales-person.schema';
 
 @Injectable()
 export class MasterDataService {

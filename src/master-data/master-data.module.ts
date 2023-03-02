@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CompanySchema, CompanySchemaCreator } from './schemas/company.schema';
 import { MODEL_ENUMS } from 'src/shared/enums/model.enum';
 import { AuthModule } from 'src/auth/auth.module';
-import { SalesPersonSchema } from './schemas/slaes-person.schema';
+import { SalesPersonSchema } from './schemas/sales-person.schema';
 
 @Module({
   imports: [

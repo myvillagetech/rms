@@ -4,8 +4,8 @@ import { AddCompanyDataDto } from './dto/add-companydata.dto';
 import { UpdateCompanyDataDto } from './dto/update-company.data.dto';
 import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guards';
-import { AddSalespersonDataDto } from './dto/sales-person/add-salesdata.dto';
-import { UpdateSalespersonDataDto } from './dto/sales-person/update-salesdata.dto';
+import { AddSalespersonDataDto } from './dto/sales-person/add-salespersondata.dto';
+import { UpdateSalespersonDataDto } from './dto/sales-person/update-salespersondata.dto';
 
 @Controller('master-data')
 @ApiTags('master-data')
