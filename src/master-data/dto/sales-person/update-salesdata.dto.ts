@@ -1,10 +1,16 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
 
-export class UpdateSalesDataDto {
+export class UpdateSalespersonDataDto {
     @IsString()
     @ApiProperty({
         type: String
     })
-    salesPersonName:string
+    salesperson:string
+
+    @IsString()
+    @ApiProperty({
+        type: String
+    })
+    companyId:string
 }

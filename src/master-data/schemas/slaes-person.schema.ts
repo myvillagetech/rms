@@ -18,7 +18,7 @@ export class SalesPersonSchemaCreator {
         required: true,
         type: String,
     })
-    salesPersonName: string;
+    salesperson: string;
 }
 
 export type SalesPersonDocument = SalesPersonSchemaCreator & Document;

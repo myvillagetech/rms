@@ -7,5 +7,13 @@ export class AddSalespersonDataDto {
     @ApiProperty({
         type: String
     })
-    salespersonName:string
+    salesperson:string
+    
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty({
+        type: String
+    })
+    companyId:string
+
 }

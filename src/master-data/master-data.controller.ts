@@ -85,7 +85,7 @@ export class MasterDataController {
     @Param('companyId') companyId : string,
     @Body() companyData : UpdateCompanyDataDto) {
     try {
-      const company = this.masterDataService.updateCompanyId(companyId,companyData);
+      const company = await this.masterDataService.updateCompanyId(companyId,companyData);
       return  await response.status(HttpStatus.CREATED).json({
         message: 'company updated successfully',
         success: true,
