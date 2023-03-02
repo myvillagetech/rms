@@ -5,6 +5,7 @@ import { UpdateCompanyDataDto } from './dto/update-company.data.dto';
 import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guards';
 import { AddSalespersonDataDto } from './dto/sales-person/add-salesdata.dto';
+import { UpdateSalespersonDataDto } from './dto/sales-person/update-salesdata.dto';
 
 @Controller('master-data')
 @ApiTags('master-data')
@@ -60,7 +61,7 @@ export class MasterDataController {
   }
 
   @Get('/company/:companyId')
-  async getCompanyBYId(
+  async getCompanyById(
     @Res() response: any,
     @Param('companyId') companyId : string){
     try {
@@ -166,7 +167,66 @@ export class MasterDataController {
     }
   }
 
+  @Get('/salesperson/:salespersonId')
+  async getSalespersonById(
+    @Res() response: any,
+    @Param('salespersonId') salespersonId : string){
+    try {
+      const salesperson = await this.masterDataService.getSalespersonById(salespersonId);
+      return response.status(HttpStatus.OK).json({
+        message: 'salesperson fetched successfully',
+        success: true,
+        salesperson,
+      });
+    } catch (error) {
+      return response.status(error.status).json({
+        message: 'Unable to fetch salesperson',
+        error: error,
+        success: false,
+      });
+    }
+  }
 
+  @Put('/salesperson/:salespersonId')
+  async updatesalespersonById(
+    @Res() response: any,
+    @Param('salespersonId') salespersonId : string,
+    @Body() salesData : UpdateSalespersonDataDto) {
+    try {
+      const salesperson = await this.masterDataService.updateSalespersonById(salespersonId,salesData);
+      return  await response.status(HttpStatus.CREATED).json({
+        message: 'salesperson updated successfully',
+        success: true,
+        salesperson,
+      });
+    } catch (error) {
+      return response.status(error.status).json({
+        message: 'Unable to fetch salesperson',
+        error: error,
+        success: false,
+      });
+    }
+  }
+
+  @Delete('/salesperson/:salespersonId')
+  async deletesalespersonById(
+    @Res() response: any,
+    @Param('salespersonId') salespersonId : string) {
+    try {
+      const company = await this.masterDataService.deleteSalespersonById(salespersonId);
+      return response.status(HttpStatus.OK).json({
+        message: 'salesperson deleted successfully',
+        success: true,
+        company,
+      });
+    } catch (error) {
+      return response.status(error.status).json({
+        message: 'Unable to delete salesperson',
+        error: error,
+        success: false,
+      });
+    }
+  }
 
 }
 

@@ -5,6 +5,7 @@ import { AuthService } from 'src/auth/auth.service';
 import { MODEL_ENUMS } from 'src/shared/enums/model.enum';
 import { AddCompanyDataDto } from './dto/add-companydata.dto';
 import { AddSalespersonDataDto } from './dto/sales-person/add-salesdata.dto';
+import { UpdateSalespersonDataDto } from './dto/sales-person/update-salesdata.dto';
 import { UpdateCompanyDataDto } from './dto/update-company.data.dto';
 import { CompanyDocument } from './schemas/company.schema';
 import { SalesPersonDocument } from './schemas/slaes-person.schema';
@@ -63,6 +64,8 @@ export class MasterDataService {
     return company;
   }
 
+// salesperson 
+
   async addSalesperson(addSalesPersonData: AddSalespersonDataDto, tokenHeader: string,):Promise<any> {
     const decodedToken: any = this.authService.getDecodedToken(tokenHeader);
     const newSalespersonData = {
@@ -84,6 +87,28 @@ export class MasterDataService {
     throw new NotFoundException(`salespersons not found`);
   }
 
+  async getSalespersonById(salespersonId : string):Promise<any>{
+    const salesperson = await this.salesModel.findById(salespersonId);
+    if(!salesperson ){
+      throw new NotFoundException('salesperson  Not Found');
+    }
+    return salesperson;
+  }
 
-  
+  async updateSalespersonById(salespersonId : string, salespersonIdtDate : UpdateSalespersonDataDto):Promise<any>{
+    const salesperson = await this.salesModel.findByIdAndUpdate(salespersonId, salespersonIdtDate, {new : true});
+    if(!salesperson ){
+      throw new NotFoundException('salesperson Not Found');
+    }
+    return salesperson;
+  }
+
+  async deleteSalespersonById(salespersonId : string):Promise<any>{
+    const salesperson = await this.salesModel.findByIdAndDelete(salespersonId);
+    if(!salesperson ){
+      throw new NotFoundException('salesperson Not Found');
+    }
+    return salesperson;
+  }
+
 }
