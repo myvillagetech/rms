@@ -8,12 +8,16 @@ import { AddSalespersonDataDto } from './dto/sales-person/add-salesperson.dto';
 import { UpdateSalespersonDataDto } from './dto/sales-person/update-salesperson.dto';
 import { UpdateCompanyDataDto } from './dto/update-company.dto';
 import { CompanyDocument } from './schemas/company.schema';
+import { paymentRequestStatusDocument, quoteStatusDocument, RFQStatusDocument } from './schemas/master-data.schema';
 import { SalesPersonDocument } from './schemas/sales-person.schema';
 
 @Injectable()
 export class MasterDataService {
   @InjectModel(MODEL_ENUMS.COMPANY) private companyModel: Model<CompanyDocument>;
   @InjectModel(MODEL_ENUMS.SALES_PERSON) private salesModel: Model<SalesPersonDocument>;
+  @InjectModel(MODEL_ENUMS.RFQ_STATUS) private RFQStatusModel: Model<RFQStatusDocument>;
+  @InjectModel(MODEL_ENUMS.PAYMENT_REQUEST_STATUS) private PaymentRequestStatusModel: Model<paymentRequestStatusDocument>;
+  @InjectModel(MODEL_ENUMS.QUOTE_STATUS) private QuoteStatusModel: Model<quoteStatusDocument>;
   constructor(
     private readonly authService: AuthService,
 ) {}
@@ -110,5 +114,17 @@ export class MasterDataService {
     }
     return salesperson;
   }
+
+  async getAllMasterData(): Promise<any> {
+    const RFQStatusData = await this.RFQStatusModel.find();
+    const quoteStatusData = await this.QuoteStatusModel.find();
+    const paymentStatusData = await this.PaymentRequestStatusModel.find();
+    const MasterData={
+      RFQStatusData:RFQStatusData,
+      quoteStatus:quoteStatusData,
+      paymentRequestStatus:paymentStatusData
+    }
+    return MasterData
+}
 
 }

@@ -228,6 +228,25 @@ export class MasterDataController {
     }
   }
 
+  @Get('/masterData')
+  async getAllMasterData(
+    @Res() response: any) {
+    try {
+      const masterData = await this.masterDataService.getAllMasterData();
+      return response.status(HttpStatus.OK).json({
+        message: 'masterData fetched successfully',
+        success: true,
+        masterData,
+      });
+    } catch (error) {
+      return response.status(error.status).json({
+        message: 'Unable to fetch masterData',
+        error: error,
+        success: false,
+      });
+    }
+  }
+
 }
 
   
