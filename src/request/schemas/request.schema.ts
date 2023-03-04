@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import {Types } from "mongoose";
+import mongoose from "mongoose";
 import { paymentRequestStatusSchemaCreator, quoteStatusSchemaCreator, RFQStatusSchemaCreator } from "src/master-data/schemas/master-data.schema";
 import { SalesPersonSchemaCreator } from "src/master-data/schemas/sales-person.schema";
 import { MODEL_ENUMS } from "src/shared/enums/model.enum";
@@ -12,31 +12,31 @@ export class RequestSchemaCreator {
     title: string;
 
     @Prop({
-        type: Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref :  MODEL_ENUMS.SALES_PERSON
     })
     persons: SalesPersonSchemaCreator;
 
     @Prop({ 
-        type: Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref : MODEL_ENUMS.RFQ_STATUS
     })
     rfqStatus: RFQStatusSchemaCreator;
 
     @Prop({ 
-        type: Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref : MODEL_ENUMS.QUOTE_STATUS 
     })
     quoteStatus: quoteStatusSchemaCreator;
 
     @Prop({ 
-        type: Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref : MODEL_ENUMS.PAYMENT_REQUEST_STATUS 
     })
     paymentStatus: paymentRequestStatusSchemaCreator;
 
     @Prop({ 
-        type: Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref : MODEL_ENUMS.SALES_PERSON 
     })
     quoteSubmittedTo: SalesPersonSchemaCreator;
