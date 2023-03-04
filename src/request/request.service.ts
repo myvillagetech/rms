@@ -1,49 +1,157 @@
 import { Injectable } from '@nestjs/common';
 import { NotFoundException } from '@nestjs/common/exceptions';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { MODEL_ENUMS } from 'src/shared/enums/model.enum';
 import { CreateRequestDto } from './dto/create-request.dto';
+import { RequestSearchCriteriaDto } from './dto/request.schemaCriteria.dto';
 import { UpdateRequestDto } from './dto/update-request.dto';
 import { RequestDocument } from './schemas/request.schema';
 
 @Injectable()
 export class RequestService {
-  @InjectModel(MODEL_ENUMS.REQUEST) private RequestModel : Model<RequestDocument>
+  @InjectModel(MODEL_ENUMS.REQUEST)
+  private RequestModel: Model<RequestDocument>;
 
   async createRequest(requestDetails: CreateRequestDto) {
-    const newRequest =  await new this.RequestModel(requestDetails);
-    return  newRequest.save();
+      const newRequest = await new this.RequestModel(requestDetails);
+      return newRequest.save();
   }
 
-  async updateRequest(requestId: string, requestDetails: UpdateRequestDto,
-    ): Promise<RequestDocument> {
+  async updateRequest(
+      requestId: string,
+      requestDetails: UpdateRequestDto,
+  ): Promise<RequestDocument> {
       const updatedRequest = await this.RequestModel.findByIdAndUpdate(
-        requestId,
-        requestDetails,
-        { new: true },
+          requestId,
+          requestDetails,
+          { new: true },
       );
       if (!updatedRequest) {
-        throw new NotFoundException(`Request #${requestId} not found`);
+          throw new NotFoundException(`Request #${requestId} not found`);
       }
       return updatedRequest;
   }
 
-  async getallRequests(){
-    const requests = await this.RequestModel.find();
-    if(requests && requests.length !==0){
-      return requests
-    }
-    throw new NotFoundException(`Requests not found`);
+  async getallRequests() {
+      const requests = await this.RequestModel.find();
+      if (requests && requests.length !== 0) {
+          return requests;
+      }
+      throw new NotFoundException(`Requests not found`);
   }
 
-  async getRequestById(requestId : string){
-    const request = await this.RequestModel.findById(requestId);
+  async getRequestById(requestId: string) {
+      const request = await this.RequestModel.findById(requestId);
 
-    if (!request) {
-      throw new NotFoundException(`Request #${requestId} not found`);
-    }
-    return request;
+      if (!request) {
+          throw new NotFoundException(`Request #${requestId} not found`);
+      }
+      return request;
+  }
 
+  async requestSearchCriteria(
+      criteria: RequestSearchCriteriaDto,
+  ): Promise<any> {
+      const search = { $and: [] };
+      let result : any = [];
+
+      if (criteria.serachTerm && criteria.serachTerm.trim() !== '') {
+          search.$and.push({
+              title: new RegExp(criteria.serachTerm.toString(), 'i'),
+          });
+      }
+
+      if (criteria.rfqStatus.length !== 0) {
+          search.$and.push({
+              rfqStatus: {
+                  $in: criteria.rfqStatus.map(
+                      (status) => new Types.ObjectId(status),
+                  ),
+              },
+          });
+      }
+
+      if (criteria.quoteStatus.length !== 0) {
+          search.$and.push({
+              quoteStatus: {
+                  $in: criteria.quoteStatus.map(
+                      (status) => new Types.ObjectId(status),
+                  ),
+              },
+          });
+      }
+
+      if (criteria.paymentStatus.length !== 0) {
+          search.$and.push({
+              paymentStatus: {
+                  $in: criteria.paymentStatus.map(
+                      (status) => new Types.ObjectId(status),
+                  ),
+              },
+          });
+      }
+
+      if (criteria.salesPersons.length !== 0) {
+          search.$and.push({
+              persons: {
+                  $in: criteria.salesPersons.map(
+                      (person) => new Types.ObjectId(person),
+                  ),
+              },
+          });
+      }
+
+      if (criteria.quoteSubmittedTo.length !== 0) {
+          search.$and.push({
+              quoteSubmittedTo: {
+                  $in: criteria.quoteSubmittedTo.map(
+                      (person) => new Types.ObjectId(person),
+                  ),
+              },
+          });
+      }
+
+      const paginationProps: any = [
+          { $match: search.$and.length > 0 ? search : {} },
+      ];
+
+      if (
+          (criteria.pageSize || criteria.pageSize > 0) &&
+          (criteria.pageNumber || criteria.pageNumber === 0)
+      ) {
+          paginationProps.push({
+              $skip: criteria.pageNumber * criteria.pageSize,
+          });
+          paginationProps.push({ $limit: criteria.pageSize });
+      }
+
+      paginationProps.push({
+          $addFields: {
+              assignTo: '$assignToObj',
+              createdByOrganization: '$createdByOrganizationObj',
+          },
+      });
+
+      let sortObject;
+      if (criteria.sortField) {
+          sortObject = {};
+          sortObject[criteria.sortField] = criteria.sortOrder;
+          paginationProps.push({ $sort: sortObject });
+      }
+
+      result = await this.RequestModel.aggregate([
+        {
+          $facet: {
+              requests: paginationProps,
+              count: [
+                  { $match: search.$and.length > 0 ? search : {} },
+                  { $count: 'count' },
+              ],
+          },
+      },
+    ])
+
+    return result;
   }
 }

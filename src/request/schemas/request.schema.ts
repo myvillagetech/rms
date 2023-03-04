@@ -1,4 +1,8 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import {Types } from "mongoose";
+import { paymentRequestStatusSchemaCreator, quoteStatusSchemaCreator, RFQStatusSchemaCreator } from "src/master-data/schemas/master-data.schema";
+import { SalesPersonSchemaCreator } from "src/master-data/schemas/sales-person.schema";
+import { MODEL_ENUMS } from "src/shared/enums/model.enum";
 @Schema()
 export class RequestSchemaCreator {
     @Prop({
@@ -8,34 +12,34 @@ export class RequestSchemaCreator {
     title: string;
 
     @Prop({
-        required: true,
-        type: String
+        type: Types.ObjectId,
+        ref :  MODEL_ENUMS.SALES_PERSON
     })
-    persons: string;
+    persons: SalesPersonSchemaCreator;
 
     @Prop({ 
-        required: true, 
-        type: String 
+        type: Types.ObjectId,
+        ref : MODEL_ENUMS.RFQ_STATUS
     })
-    rfqStatus: string;
+    rfqStatus: RFQStatusSchemaCreator;
 
     @Prop({ 
-        required: true, 
-        type: String 
+        type: Types.ObjectId,
+        ref : MODEL_ENUMS.QUOTE_STATUS 
     })
-    quoteStatus: string;
+    quoteStatus: quoteStatusSchemaCreator;
 
     @Prop({ 
-        required: true, 
-        type: String 
+        type: Types.ObjectId,
+        ref : MODEL_ENUMS.PAYMENT_REQUEST_STATUS 
     })
-    paymentStatus: string;
+    paymentStatus: paymentRequestStatusSchemaCreator;
 
     @Prop({ 
-        required: true, 
-        type: String 
+        type: Types.ObjectId,
+        ref : MODEL_ENUMS.SALES_PERSON 
     })
-    quoteSubmittedTo: string;
+    quoteSubmittedTo: SalesPersonSchemaCreator;
 
     @Prop({ required: true, type: String })
     rfqReceivedDate: string;

@@ -5,6 +5,7 @@ import { UpdateRequestDto } from './dto/update-request.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Put, Res } from '@nestjs/common/decorators';
 import { HttpStatus } from '@nestjs/common/enums';
+import { RequestSearchCriteriaDto } from './dto/request.schemaCriteria.dto';
 
 @Controller('request')
 @ApiTags('request')
@@ -83,6 +84,30 @@ export class RequestController {
 			return response.status(HttpStatus.OK).json({
 				message: 'Request successfully updated',
 				updatedRequest,
+				success: true,
+			});
+		} catch (error) {
+			return response.status(HttpStatus.BAD_REQUEST).json({
+				statusCode: error.statusCode ? error.statusCode : 400,
+				message: 'Error: Request Details not found!',
+				error: error,
+				success: false,
+			});
+		}
+	}
+
+	@Post('/searchCriteria')
+	async requestSerachCriteria(
+		@Res() response,
+		@Body() requestSearchCriteria: RequestSearchCriteriaDto,
+	){
+		try {
+			const requests = await this.requestService.requestSearchCriteria(
+				requestSearchCriteria
+			);
+			return response.status(HttpStatus.OK).json({
+				message: 'Requests fetched successfully',
+				requests,
 				success: true,
 			});
 		} catch (error) {
