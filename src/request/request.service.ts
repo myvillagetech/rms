@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { NotFoundException } from '@nestjs/common/exceptions';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import mongoose, { Model, Types } from 'mongoose';
+import { MasterDataService } from 'src/master-data/master-data.service';
 import { MODEL_ENUMS } from 'src/shared/enums/model.enum';
 import { CreateRequestDto } from './dto/create-request.dto';
 import { RequestSearchCriteriaDto } from './dto/request.schemaCriteria.dto';
@@ -12,6 +13,10 @@ import { RequestDocument } from './schemas/request.schema';
 export class RequestService {
   @InjectModel(MODEL_ENUMS.REQUEST)
   private RequestModel: Model<RequestDocument>;
+
+  constructor(
+    private readonly masterDataService : MasterDataService
+  ){}
 
   async createRequest(requestDetails: CreateRequestDto) {
       const newRequest = await new this.RequestModel(requestDetails);
@@ -154,4 +159,49 @@ export class RequestService {
 
     return result;
   }
+
+  async getDashBoardPaymentStatusMetrics(){
+    let paymentStatus = await this.masterDataService.getAllMasterData();
+
+    paymentStatus = paymentStatus.paymentRequestStatus.map((t: any)=> t._doc)
+
+    const result = await this.RequestModel.aggregate([
+        {
+            $facet : {
+                total : [{$count : 'total'}],
+                received : [
+                    {
+                        $match : {
+                            paymentStatus : new mongoose.Types.ObjectId(
+                                paymentStatus.find(
+                                    (status : any) => status.status === 'RECEIVED'
+                                )._id.toString()
+                            )
+                        }
+                    },
+                    { $count : 'received'}
+                ],
+                pending : [
+                    {
+                        $match : {
+                            paymentStatus : new mongoose.Types.ObjectId(
+                                paymentStatus.find(
+                                    (status : any) => status.status === 'PENDING'
+                                )._id.toString()
+                            )
+                        }
+                    },
+                    { $count : 'pending'}
+                ]
+            }
+        }
+    ]);
+
+    return result;
+
+
 }
+}
+
+
+

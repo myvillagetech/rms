@@ -120,4 +120,25 @@ export class RequestController {
 		}
 	}
 
+	@Post('/dashboardPaymentStatusMetrics')
+	async paymentStatusMetrics(
+		@Res() response
+	){
+		try{
+			const results = await this.requestService.getDashBoardPaymentStatusMetrics();
+			return response.status(HttpStatus.OK).json({
+				message : 'Payment status metrics fetched successfully',
+				results,
+				success : true
+			});
+		} catch (error) {
+			return response.status(HttpStatus.BAD_REQUEST).json({
+				statusCode: error.statusCode ? error.statusCode : 400,
+				message: 'Unable to Fetch Payment status metrics',
+				error : error,
+				success : false
+			})
+		}
+	}
+
 }

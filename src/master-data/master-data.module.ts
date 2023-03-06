@@ -20,6 +20,7 @@ import { paymentRequestStatusSchema, quoteStatusStatusSchema, RFQStatusSchema } 
     AuthModule,
   ],
   controllers: [MasterDataController],
-  providers: [MasterDataService]
+  providers: [MasterDataService],
+  exports : [MasterDataService]
 })
 export class MasterDataModule {}
