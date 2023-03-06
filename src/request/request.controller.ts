@@ -141,4 +141,25 @@ export class RequestController {
 		}
 	}
 
+	@Post('/dashboardRFQStatusMetrics')
+	async rfqStatusMetrics(
+		@Res() response
+	){
+		try{
+			const results = await this.requestService.getDashBoardRFQStatusMetrics();
+			return response.status(HttpStatus.OK).json({
+				message : 'RFQ status metrics fetched successfully',
+				results,
+				success : true
+			});
+		} catch (error) {
+			return response.status(HttpStatus.BAD_REQUEST).json({
+				statusCode: error.statusCode ? error.statusCode : 400,
+				message: 'Unable to Fetch RFQ status metrics',
+				error : error,
+				success : false
+			})
+		}
+	}
+
 }
