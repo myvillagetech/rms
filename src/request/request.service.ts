@@ -144,6 +144,47 @@ export class RequestService {
         }
 
         result = await this.RequestModel.aggregate([
+            { $match : search.$and.length > 0 ? search : {}},
+            {
+                $lookup : {
+                    from : 'rfqstatuses',
+                    localField : 'rfqStatus',
+                    foreignField : '_id',
+                    as : 'rfqStatusData'
+                },
+            },
+            {
+                $lookup : {
+                    from : 'paymentrequeststatuses',
+                    localField : 'paymentStatus',
+                    foreignField : '_id',
+                    as : 'paymentStatusData'
+                },
+            },
+            {
+                $lookup : {
+                    from : 'quotestatuses',
+                    localField : 'quoteStatus',
+                    foreignField : '_id',
+                    as : 'quoteStatusData'
+                },
+            },
+            {
+                $lookup : {
+                    from : 'sales-people',
+                    localField : 'persons',
+                    foreignField : '_id',
+                    as : 'salesPersonData'
+                },
+            },
+            {
+                $lookup : {
+                    from : 'sales-people',
+                    localField : 'quoteSubmittedTo',
+                    foreignField : '_id',
+                    as : 'quoteSubmittedToData'
+                },
+            },
             {
                 $facet: {
                     requests: paginationProps,
