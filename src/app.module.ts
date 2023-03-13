@@ -11,6 +11,8 @@ import { RequestModule } from './request/request.module';
 import { CommentsModule } from './comments/comments.module';
 import { MasterDataModule } from './master-data/master-data.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 
 @Module({
   imports: [
@@ -31,7 +33,5 @@ import { ServeStaticModule } from '@nestjs/serve-static';
   providers: [AppService],
 })
 export class AppModule {}
-function join(__dirname: string, arg1: string, arg2: string): string {
-  throw new Error('Function not implemented.');
-}
+
 
