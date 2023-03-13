@@ -10,6 +10,7 @@ import { SupplierModule } from './supplier/supplier.module';
 import { RequestModule } from './request/request.module';
 import { CommentsModule } from './comments/comments.module';
 import { MasterDataModule } from './master-data/master-data.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -17,10 +18,20 @@ import { MasterDataModule } from './master-data/master-data.module';
     UserModule, 
     AuthModule, 
     ConfigModule.forRoot(), 
-    SupplierModule, RequestModule, CommentsModule,  MasterDataModule,
+    SupplierModule, 
+    RequestModule, 
+    CommentsModule,  
+    MasterDataModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'static'),
+  }),
 
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
+function join(__dirname: string, arg1: string, arg2: string): string {
+  throw new Error('Function not implemented.');
+}
+
